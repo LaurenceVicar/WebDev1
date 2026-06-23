@@ -1,0 +1,9 @@
+{
+    "Books": [
+        {"title":"The Road","author":"Cormac McCarthy","image":"images/the road.jpg"},
+        {"title":"Blood Meridian","author":"Cormac McCarthy","image":"images/blood meridian.jpg"},
+        {"title":"To Kill a Mockingbird","author":"Harper Lee","image":"images/to kill a mockingbird.jpg"},
+        {"title":"1984","author":"George Orwell","image":"images/1984.jpg"},
+        {"title":"Default","author":"John Doe","image":"images/default.jpg"}
+    ]
+}

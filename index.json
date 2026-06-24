@@ -1,9 +1,9 @@
 {
     "Books": [
-        {"title":"The Road","author":"Cormac McCarthy","image":"images/the road.jpg"},
-        {"title":"Blood Meridian","author":"Cormac McCarthy","image":"images/blood meridian.jpg"},
-        {"title":"To Kill a Mockingbird","author":"Harper Lee","image":"images/to kill a mockingbird.jpg"},
-        {"title":"1984","author":"George Orwell","image":"images/1984.jpg"},
-        {"title":"Default","author":"John Doe","image":"images/default.jpg"}
+        {"title":"<a href='Books.html'>The Road</a>","author":"Cormac McCarthy","image":"images/the road.jpg"},
+        {"title":"<a href='Books.html'>Blood Meridian</a>","author":"Cormac McCarthy","image":"images/blood meridian.jpg"},
+        {"title":"<a href='Books.html'>To Kill a Mockingbird</a>","author":"Harper Lee","image":"images/to kill a mocking bird.jpg"},
+        {"title":"<a href='Books.html'>1984</a>","author":"George Orwell","image":"images/1984.jpg"},
+        {"title":"<a href='Books.html'>Default</a>","author":"John Doe","image":"images/to kill a mocking bird.jpg"}
     ]
 }

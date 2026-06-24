@@ -1,9 +1,6 @@
-.sidebar{
-    height: 100%;
-    width: 200px;
-    position: ;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    padding-top: 20px;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #000000;
 }

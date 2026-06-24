@@ -4,6 +4,6 @@
         {"title":"<a href='Books.html'>Blood Meridian</a>","author":"Cormac McCarthy","image":"images/blood meridian.jpg"},
         {"title":"<a href='Books.html'>To Kill a Mockingbird</a>","author":"Harper Lee","image":"images/to kill a mocking bird.jpg"},
         {"title":"<a href='Books.html'>1984</a>","author":"George Orwell","image":"images/1984.jpg"},
-        {"title":"<a href='Books.html'>Default</a>","author":"John Doe","image":"images/to kill a mocking bird.jpg"}
+        {"title":"<a href='Books.html'>Default</a>","author":"John Doe","image":"images/default.jpg"}
     ]
 }

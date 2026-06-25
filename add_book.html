@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libra Library</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark text-light">
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+    <div class="container">
+
+        <a class="navbar-brand" href="#">
+            Libra
+            <img src="images/booklogo.jpg"
+                 alt="Book Logo"
+                 style="width:40px;"
+                 class="rounded-circle">
+        </a>
+
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="Home.html">Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Aboutus.html">About Us</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Services.html">Services</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Books.html">Books</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="add_book.html">Add Book</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Contact.html">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="Signup.html">Signup</a></li>
+            <li><a class="dropdown-item" href="Login.html">Login</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        </ul>
+
+    </div>
+</nav>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Add a New Book</h1>
+<form>
+    <div class="mb-3">
+        <label for="bookTitle" class="form-label">Book Title</label>
+        <input type="text" class="form-control" id="bookTitle" required>
+    </div>
+    <div class="mb-3">
+        <label for="bookAuthor" class="form-label">Author</label>
+        <input type="text" class="form-control" id="bookAuthor" required>
+    </div>
+    <div class="mb-3">
+        <label for="bookImage" class="form-label">Image URL</label>
+        <input type="url" class="form-control" id="bookImage" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Book</button>
+</form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="index.js"></script>
+
+</body>
+</html>

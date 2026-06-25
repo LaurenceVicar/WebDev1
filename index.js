@@ -1,7 +1,3 @@
-function myFunction() {
-    var element = document.body;
-    element.classList.toggle("dark-mode");
-}
 async function fetchBooks() {
     const response = await fetch('index.json');
     const data = await response.json();

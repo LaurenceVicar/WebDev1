@@ -4,3 +4,13 @@
     padding: 20px;
     background-color: #000000;
 }
+img {
+    max-width: 100%;
+    height: auto;
+}
+.card,
+.card-body {
+background-color: transparent !important;
+color: inherit;
+border-color: rgba(163, 145, 145, 0.2);
+}

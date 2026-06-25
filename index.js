@@ -3,6 +3,7 @@ async function fetchBooks() {
     const response = await fetch('index.json');
     const data = await response.json();
     const bookContainer = document.getElementById('book');
+    if (!bookContainer) return;
     bookContainer.innerHTML = data.Books.map(book => `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
@@ -17,23 +18,45 @@ async function fetchBooks() {
 }
 fetchBooks();
 
+//Gets the book information from the index.json file and displays it on the page
+async function fetchBookInfo() {
+    const response = await fetch('index.json');
+    const data = await response.json();
+    const bookInfoContainer = document.getElementById('book-info');
+    if (!bookInfoContainer) return;
+    bookInfoContainer.innerHTML = (data.Book_info || []).map(book => `
+        <div class="row">
+            <div class="col-sm-4">${book.title}</div>
+            <div class="col-sm-8">${book.description}</div>
+        </div>
+    `).join("");
+}
+fetchBookInfo();
+
 
 // Validates the password and confirm password fields in the signup form
-document.getElementById('password').addEventListener('input', function() {
-    const password = this.value;
-    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if (!pattern.test(password)) {
-        this.setCustomValidity("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.");
-    } else {
-        this.setCustomValidity("");
-    }
-});
-document.getElementById('confirmPassword').addEventListener('input', function() {
-    const confirmPassword = this.value;
-    const password = document.getElementById('password').value;
-    if (confirmPassword !== password) {
-        this.setCustomValidity("Passwords do not match.");
-    } else {
-        this.setCustomValidity("");
-    }
-});
+const passwordInput = document.getElementById('password');
+if (passwordInput) {
+    passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if (!pattern.test(password)) {
+            this.setCustomValidity("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+}
+
+const confirmPasswordInput = document.getElementById('confirmPassword');
+if (confirmPasswordInput && passwordInput) {
+    confirmPasswordInput.addEventListener('input', function() {
+        const confirmPassword = this.value;
+        const password = passwordInput.value;
+        if (confirmPassword !== password) {
+            this.setCustomValidity("Passwords do not match.");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+}

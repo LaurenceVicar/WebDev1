@@ -1,8 +1,8 @@
 {
     "Books": [
-        {"title":"<a href='Book_info.html'>The Road</a>","author":"Cormac McCarthy","image":"images/the road.jpg"},
-        {"title":"<a href='Book_info.html'>Blood Meridian</a>","author":"Cormac McCarthy","image":"images/blood meridian.jpg"},
-        {"title":"<a href='Book_info.html'>To Kill a Mockingbird</a>","author":"Harper Lee","image":"images/to kill a mocking bird.jpg"},
-        {"title":"<a href='Book_info.html'>1984</a>","author":"George Orwell","image":"images/1984.jpg"}
+        {"title":"<a href='Book_info.html'>The Road</a>","author":"Cormac McCarthy","image":"images/the road.jpg","summary":"The Road is a post-apocalyptic novel that follows a father and his young son as they journey through a desolate landscape, struggling to survive in a world devoid of civilization."},
+        {"title":"<a href='Book_info.html'>Blood Meridian</a>","author":"Cormac McCarthy","image":"images/blood meridian.jpg","summary":"Blood Meridian is a violent and epic novel set in the American West, exploring themes of morality, violence, and the nature of evil."},
+        {"title":"<a href='Book_info.html'>To Kill a Mockingbird</a>","author":"Harper Lee","image":"images/to kill a mocking bird.jpg","summary":"To Kill a Mockingbird is a classic novel that addresses serious issues such as racial injustice and moral growth through the eyes of a young girl."},
+        {"title":"<a href='Book_info.html'>1984</a>","author":"George Orwell","image":"images/1984.jpg","summary":"1984 is a dystopian novel that explores the dangers of totalitarianism, surveillance, and the loss of individual freedom in a society dominated by oppressive government control."}
     ]
 }

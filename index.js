@@ -4,6 +4,7 @@ const CUSTOM_BOOKS_KEY = 'libraCustomBooks';
 const CURRENT_USER_KEY = 'libraCurrentUser';
 let cachedBooks = [];
 
+// Reads and parses an array from localStorage; returns an empty array on missing/invalid data.
 function getStoredArray(key) {
     try {
         const raw = localStorage.getItem(key);
@@ -13,10 +14,12 @@ function getStoredArray(key) {
     }
 }
 
+// Persists an array value in localStorage under a given key.
 function setStoredArray(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
+// Displays one Bootstrap alert per form by replacing any previous message.
 function showFormMessage(form, type, message) {
     const existing = form.querySelector('.js-form-message');
     if (existing) {
@@ -29,12 +32,14 @@ function showFormMessage(form, type, message) {
     form.appendChild(alert);
 }
 
+// Removes HTML tags so linked titles from JSON can be searched as plain text.
 function stripHtml(value) {
     const temp = document.createElement('div');
     temp.innerHTML = value;
     return temp.textContent || temp.innerText || '';
 }
 
+// Renders the current book list into the #book container.
 function renderBooks(books) {
     const bookContainer = document.getElementById('book');
     if (!bookContainer) return;
@@ -57,7 +62,7 @@ function renderBooks(books) {
     `).join('');
 }
 
-// Gets the book titles and images from index.json and combines them with books added from the form.
+// Loads books from index.json, merges with user-added books, and initializes search state.
 async function fetchBooks() {
     const bookContainer = document.getElementById('book');
     if (!bookContainer) return;
@@ -75,6 +80,7 @@ async function fetchBooks() {
 }
 fetchBooks();
 
+// Handles live and submit-based search filtering on the Books page.
 function setupBookSearch() {
     const searchInput = document.getElementById('bookSearchInput');
     if (!searchInput) return;
@@ -114,7 +120,7 @@ function setupBookSearch() {
     }
 }
 
-//Gets the book information from the index.json file and displays it on the page
+// Renders detailed book information when the book info container exists.
 async function fetchBookInfo() {
     const response = await fetch('index.json');
     const data = await response.json();
@@ -130,6 +136,7 @@ async function fetchBookInfo() {
 fetchBookInfo();
 
 
+// Registers signup logic: validates, prevents duplicate emails, then stores a new user.
 function setupSignupForm() {
     const fullNameInput = document.getElementById('fullName');
     if (!fullNameInput) return;
@@ -173,6 +180,7 @@ function setupSignupForm() {
     });
 }
 
+// Registers login logic and stores the currently signed-in user.
 function setupLoginForm() {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
@@ -208,6 +216,7 @@ function setupLoginForm() {
     });
 }
 
+// Stores contact form submissions with a timestamp.
 function setupContactForm() {
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
@@ -239,6 +248,7 @@ function setupContactForm() {
     });
 }
 
+// Stores newly added books so they can be displayed with catalog books.
 function setupAddBookForm() {
     const titleInput = document.getElementById('bookTitle');
     if (!titleInput) return;
@@ -270,13 +280,14 @@ function setupAddBookForm() {
     });
 }
 
+// Safe on all pages because each setup exits early when required fields are missing.
 setupSignupForm();
 setupLoginForm();
 setupContactForm();
 setupAddBookForm();
 
 
-// Validates password strength and matching only on the signup page.
+// Password rules and matching are only applied on the signup page.
 const signupPasswordInput = document.getElementById('password');
 if (signupPasswordInput && document.getElementById('fullName')) {
     signupPasswordInput.addEventListener('input', function() {

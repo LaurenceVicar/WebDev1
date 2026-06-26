@@ -60,6 +60,17 @@
 </nav>
 <div class="container mt-5">
     <h1 class="text-center mb-4">Our Book Collection</h1>
+    <form id="bookSearchForm" class="row g-2 mb-4 justify-content-center" role="search">
+        <div class="col-12 col-md-6">
+            <input id="bookSearchInput" class="form-control" type="search" placeholder="Search by title or author" aria-label="Search books">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        <div class="col-auto">
+            <button id="clearBookSearch" class="btn btn-outline-light" type="button">Clear</button>
+        </div>
+    </form>
     <div class="row" id="book">
         <div class="col-md-4 mb-4">
             <div class="card h-100">

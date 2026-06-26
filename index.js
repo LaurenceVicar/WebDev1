@@ -1,10 +1,50 @@
-//Gets the book titles and images from the index.json file and displays them on the page
-async function fetchBooks() {
-    const response = await fetch('index.json');
-    const data = await response.json();
+const USERS_KEY = 'libraUsers';
+const CONTACT_MESSAGES_KEY = 'libraContactMessages';
+const CUSTOM_BOOKS_KEY = 'libraCustomBooks';
+const CURRENT_USER_KEY = 'libraCurrentUser';
+let cachedBooks = [];
+
+function getStoredArray(key) {
+    try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : [];
+    } catch {
+        return [];
+    }
+}
+
+function setStoredArray(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function showFormMessage(form, type, message) {
+    const existing = form.querySelector('.js-form-message');
+    if (existing) {
+        existing.remove();
+    }
+
+    const alert = document.createElement('div');
+    alert.className = `alert js-form-message mt-3 alert-${type}`;
+    alert.textContent = message;
+    form.appendChild(alert);
+}
+
+function stripHtml(value) {
+    const temp = document.createElement('div');
+    temp.innerHTML = value;
+    return temp.textContent || temp.innerText || '';
+}
+
+function renderBooks(books) {
     const bookContainer = document.getElementById('book');
     if (!bookContainer) return;
-    bookContainer.innerHTML = data.Books.map(book => `
+
+    if (!books.length) {
+        bookContainer.innerHTML = '<p class="text-warning">No books found for your search.</p>';
+        return;
+    }
+
+    bookContainer.innerHTML = books.map(book => `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <img src="${book.image}" class="card-img-top" alt="${book.title}">
@@ -14,9 +54,65 @@ async function fetchBooks() {
                 </div>
             </div>
         </div>
-        `).join("");
+    `).join('');
+}
+
+// Gets the book titles and images from index.json and combines them with books added from the form.
+async function fetchBooks() {
+    const bookContainer = document.getElementById('book');
+    if (!bookContainer) return;
+
+    try {
+        const response = await fetch('index.json');
+        const data = await response.json();
+        const customBooks = getStoredArray(CUSTOM_BOOKS_KEY);
+        cachedBooks = [...(data.Books || []), ...customBooks];
+        renderBooks(cachedBooks);
+        setupBookSearch();
+    } catch {
+        bookContainer.innerHTML = '<p class="text-warning">Unable to load books right now.</p>';
+    }
 }
 fetchBooks();
+
+function setupBookSearch() {
+    const searchInput = document.getElementById('bookSearchInput');
+    if (!searchInput) return;
+
+    const searchForm = document.getElementById('bookSearchForm');
+    const clearButton = document.getElementById('clearBookSearch');
+
+    const applySearch = function() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) {
+            renderBooks(cachedBooks);
+            return;
+        }
+
+        const filtered = cachedBooks.filter(book => {
+            const title = stripHtml(book.title || '').toLowerCase();
+            const author = (book.author || '').toLowerCase();
+            return title.includes(query) || author.includes(query);
+        });
+
+        renderBooks(filtered);
+    };
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        applySearch();
+    });
+
+    searchInput.addEventListener('input', applySearch);
+
+    if (clearButton) {
+        clearButton.addEventListener('click', function() {
+            searchInput.value = '';
+            renderBooks(cachedBooks);
+            searchInput.focus();
+        });
+    }
+}
 
 //Gets the book information from the index.json file and displays it on the page
 async function fetchBookInfo() {
@@ -34,10 +130,156 @@ async function fetchBookInfo() {
 fetchBookInfo();
 
 
-// Validates the password and confirm password fields in the signup form
-const passwordInput = document.getElementById('password');
-if (passwordInput) {
-    passwordInput.addEventListener('input', function() {
+function setupSignupForm() {
+    const fullNameInput = document.getElementById('fullName');
+    if (!fullNameInput) return;
+
+    const signupForm = fullNameInput.closest('form');
+    if (!signupForm) return;
+
+    signupForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!signupForm.checkValidity()) {
+            signupForm.reportValidity();
+            return;
+        }
+
+        const emailInput = signupForm.querySelector('#email');
+        const passwordInput = signupForm.querySelector('#password');
+        const confirmPasswordInput = signupForm.querySelector('#confirmPassword');
+
+        const fullName = fullNameInput.value.trim();
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (password !== confirmPassword) {
+            showFormMessage(signupForm, 'danger', 'Passwords do not match.');
+            return;
+        }
+
+        const users = getStoredArray(USERS_KEY);
+        const userExists = users.some(user => user.email === email);
+        if (userExists) {
+            showFormMessage(signupForm, 'warning', 'An account with this email already exists.');
+            return;
+        }
+
+        users.push({ fullName, email, password });
+        setStoredArray(USERS_KEY, users);
+        showFormMessage(signupForm, 'success', 'Signup successful. You can now log in.');
+        signupForm.reset();
+    });
+}
+
+function setupLoginForm() {
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    if (!emailInput || !passwordInput) return;
+
+    const loginForm = emailInput.closest('form');
+    if (!loginForm) return;
+
+    const hasFullNameField = Boolean(document.getElementById('fullName'));
+    if (hasFullNameField) return;
+
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!loginForm.checkValidity()) {
+            loginForm.reportValidity();
+            return;
+        }
+
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+        const users = getStoredArray(USERS_KEY);
+        const matchedUser = users.find(user => user.email === email && user.password === password);
+
+        if (!matchedUser) {
+            showFormMessage(loginForm, 'danger', 'Invalid email or password.');
+            return;
+        }
+
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(matchedUser));
+        showFormMessage(loginForm, 'success', `Welcome back, ${matchedUser.fullName}.`);
+        loginForm.reset();
+    });
+}
+
+function setupContactForm() {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    if (!nameInput || !emailInput || !messageInput) return;
+
+    const contactForm = nameInput.closest('form');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
+        }
+
+        const messages = getStoredArray(CONTACT_MESSAGES_KEY);
+        messages.push({
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim().toLowerCase(),
+            message: messageInput.value.trim(),
+            sentAt: new Date().toISOString()
+        });
+        setStoredArray(CONTACT_MESSAGES_KEY, messages);
+
+        showFormMessage(contactForm, 'success', 'Message sent successfully. Thank you for contacting us.');
+        contactForm.reset();
+    });
+}
+
+function setupAddBookForm() {
+    const titleInput = document.getElementById('bookTitle');
+    if (!titleInput) return;
+
+    const addBookForm = titleInput.closest('form');
+    if (!addBookForm) return;
+
+    addBookForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!addBookForm.checkValidity()) {
+            addBookForm.reportValidity();
+            return;
+        }
+
+        const authorInput = document.getElementById('bookAuthor');
+        const imageInput = document.getElementById('bookImage');
+
+        const customBooks = getStoredArray(CUSTOM_BOOKS_KEY);
+        customBooks.push({
+            title: titleInput.value.trim(),
+            author: authorInput.value.trim(),
+            image: imageInput.value.trim()
+        });
+        setStoredArray(CUSTOM_BOOKS_KEY, customBooks);
+
+        showFormMessage(addBookForm, 'success', 'Book added. It will appear on the Books page.');
+        addBookForm.reset();
+    });
+}
+
+setupSignupForm();
+setupLoginForm();
+setupContactForm();
+setupAddBookForm();
+
+
+// Validates password strength and matching only on the signup page.
+const signupPasswordInput = document.getElementById('password');
+if (signupPasswordInput && document.getElementById('fullName')) {
+    signupPasswordInput.addEventListener('input', function() {
         const password = this.value;
         const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         if (!pattern.test(password)) {
@@ -49,10 +291,10 @@ if (passwordInput) {
 }
 
 const confirmPasswordInput = document.getElementById('confirmPassword');
-if (confirmPasswordInput && passwordInput) {
+if (confirmPasswordInput && signupPasswordInput) {
     confirmPasswordInput.addEventListener('input', function() {
         const confirmPassword = this.value;
-        const password = passwordInput.value;
+        const password = signupPasswordInput.value;
         if (confirmPassword !== password) {
             this.setCustomValidity("Passwords do not match.");
         } else {

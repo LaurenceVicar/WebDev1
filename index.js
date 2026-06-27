@@ -14,7 +14,7 @@ function getStoredArray(key) {
     }
 }
 
-// Persists an array value in localStorage under a given key.
+// Stores a specific array in localStorage after stringifying it.
 function setStoredArray(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }

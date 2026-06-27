@@ -3,49 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libra Social Feed</title>
+    <title>Libra Stream</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .insta-hero {
-            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+        .stream-shell {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .stream-hero {
+            background: linear-gradient(135deg, #1d9bf0, #0b5ea8);
             border-radius: 18px;
-            padding: 28px;
+            padding: 22px;
         }
 
-        .insta-avatar {
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-        }
-
-        .insta-post {
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        .insta-post img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-        }
-
-        .insta-actions i {
-            font-size: 1.25rem;
-        }
-
-        .note-badge {
-            background-color: rgba(255, 255, 255, 0.18);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+        .stream-chip {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 999px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
+        }
+
+        .tweet-card {
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px;
+        }
+
+        .tweet-meta {
+            color: #9fb3c8;
+            font-size: 0.9rem;
+        }
+
+        .tweet-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #c9d5e3;
+            font-size: 0.92rem;
+            margin-top: 12px;
+        }
+
+        .tweet-stats i {
+            margin-right: 6px;
+        }
+
+        .trending-box {
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px;
+        }
+
+        .trending-box li {
+            margin-bottom: 12px;
         }
     </style>
 </head>
@@ -103,58 +118,81 @@
     </div>
 </nav>
 
-<main class="container my-5">
-    <section class="insta-hero mb-4">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-            <div class="d-flex align-items-center gap-3">
-                <img src="images/booklogo.jpg" alt="Libra profile" class="insta-avatar">
-                <div>
-                    <h1 class="h3 mb-1">@libra.library</h1>
-                    <p class="mb-0">Book snapshots, reading lists, and community highlights.</p>
-                </div>
+<main class="container my-5 stream-shell">
+    <section class="stream-hero mb-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <h1 class="h3 mb-1">@LibraLibrary Stream</h1>
+                <p class="mb-2">Short updates from the shelves, readers, and events.</p>
+                <span class="stream-chip">Libra mock social page</span>
             </div>
-            <span class="note-badge">Libra mock social page</span>
+            <a href="Books.html" class="btn btn-light text-dark">Browse Books</a>
         </div>
     </section>
 
     <section class="row g-4">
-        <div class="col-12 col-md-6 col-lg-4">
-            <article class="insta-post h-100">
-                <img src="images/the road.jpg" alt="The Road cover">
-                <div class="p-3">
-                    <div class="d-flex justify-content-between insta-actions mb-2">
-                        <span><i class="bi bi-heart"></i> 214</span>
-                        <span><i class="bi bi-chat"></i> 32</span>
-                    </div>
-                    <p class="mb-0"><strong>@libra.library</strong> Weekend pick: The Road. Dark, powerful, unforgettable.</p>
+        <div class="col-12 col-lg-8 d-grid gap-3">
+            <article class="tweet-card">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong>Libra Library</strong>
+                    <span class="tweet-meta">@LibraLibrary · 2h</span>
+                </div>
+                <p class="mb-0">Tonight at 6 PM: community reading circle in the main hall. Bring one favorite quote.</p>
+                <div class="tweet-stats">
+                    <span><i class="bi bi-chat"></i>14</span>
+                    <span><i class="bi bi-repeat"></i>27</span>
+                    <span><i class="bi bi-heart"></i>182</span>
+                    <span><i class="bi bi-bookmark"></i>9</span>
+                </div>
+            </article>
+
+            <article class="tweet-card">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong>Libra Picks</strong>
+                    <span class="tweet-meta">@LibraPicks · 5h</span>
+                </div>
+                <p class="mb-0">Reader poll: which one should be our weekend feature, The Road or Blood Meridian?</p>
+                <div class="tweet-stats">
+                    <span><i class="bi bi-chat"></i>31</span>
+                    <span><i class="bi bi-repeat"></i>12</span>
+                    <span><i class="bi bi-heart"></i>143</span>
+                    <span><i class="bi bi-bookmark"></i>17</span>
+                </div>
+            </article>
+
+            <article class="tweet-card">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong>Libra Events</strong>
+                    <span class="tweet-meta">@LibraEvents · 1d</span>
+                </div>
+                <p class="mb-0">Open mic review night this Friday. Drop your 60-second review and win a featured shelf spot.</p>
+                <div class="tweet-stats">
+                    <span><i class="bi bi-chat"></i>9</span>
+                    <span><i class="bi bi-repeat"></i>22</span>
+                    <span><i class="bi bi-heart"></i>121</span>
+                    <span><i class="bi bi-bookmark"></i>8</span>
                 </div>
             </article>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-4">
-            <article class="insta-post h-100">
-                <img src="images/blood meridian.jpg" alt="Blood Meridian cover">
-                <div class="p-3">
-                    <div class="d-flex justify-content-between insta-actions mb-2">
-                        <span><i class="bi bi-heart"></i> 176</span>
-                        <span><i class="bi bi-chat"></i> 18</span>
-                    </div>
-                    <p class="mb-0"><strong>@libra.library</strong> New arrival spotlight: Blood Meridian.</p>
-                </div>
-            </article>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4">
-            <article class="insta-post h-100">
-                <img src="images/booklogo.jpg" alt="Libra logo post">
-                <div class="p-3">
-                    <div class="d-flex justify-content-between insta-actions mb-2">
-                        <span><i class="bi bi-heart"></i> 95</span>
-                        <span><i class="bi bi-chat"></i> 11</span>
-                    </div>
-                    <p class="mb-0"><strong>@libra.library</strong> Reader challenge: share your top 3 books this month.</p>
-                </div>
-            </article>
+        <div class="col-12 col-lg-4">
+            <aside class="trending-box">
+                <h2 class="h6 text-uppercase mb-3">Trending in Libra</h2>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <div class="tweet-meta">Books</div>
+                        <div>#WeekendReads</div>
+                    </li>
+                    <li>
+                        <div class="tweet-meta">Community</div>
+                        <div>#LibraCircle</div>
+                    </li>
+                    <li>
+                        <div class="tweet-meta">Events</div>
+                        <div>#ReviewNight</div>
+                    </li>
+                </ul>
+            </aside>
         </div>
     </section>
 </main>
